@@ -18,7 +18,7 @@ using namespace std;  //Name-space used in the System Library
 //Execution Begins Here!
 int main(int argc, char** argv) {
     //Declaration of Variables
-    int op1, op2;
+    int op1, op2; //Inputs
     
     //Input values
     cout<<"Input 2 integer values to Add, Sub, Mult, Div, Mod"<<endl;

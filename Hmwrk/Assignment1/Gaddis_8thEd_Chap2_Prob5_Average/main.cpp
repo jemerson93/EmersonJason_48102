@@ -20,7 +20,7 @@ using namespace std;  //Name-space used in the System Library
 int main(int argc, char** argv) {
     //Declaration of Variables
     int x1,x2,x3,x4,x5; //Input Values
-    float avg, stdev;
+    float avg, stdev; //Input Values
     
     //Input values
     cout<<"This program calculates the mean and standard deviation"<<endl;
