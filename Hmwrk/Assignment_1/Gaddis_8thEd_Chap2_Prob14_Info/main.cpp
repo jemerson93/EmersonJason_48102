@@ -1,6 +1,6 @@
 /* 
    File:   main
-   Author: Dr. Mark E. Lehr
+   Author: Jason Emerson
    Created on September 19, 2016, 11:46 AM
    Purpose: To view personal identification on one cout line
  */
