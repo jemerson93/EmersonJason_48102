@@ -20,8 +20,8 @@ using namespace std;  //Name-space used in the System Library
 //Execution Begins Here!
 int main(int argc, char** argv) {
     //Declaration of Variables
-    unsigned short numA,numB,numC; //Number of each ticket sold
-    float costA,costB,costC; //Cost of Seats A ($15),B ($12) and C ($9) for tickets
+    short numA,numB,numC; //Number of each ticket sold
+    float costA,costB,costC; //Cost of Seats A,B and C for tickets
     float tot; //Total income of all the tickets
    
     
