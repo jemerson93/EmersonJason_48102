@@ -1,6 +1,6 @@
 /* 
  * File:   main.cpp
- * Author: Edward Budiman
+ * Author: Jason Emerson
  * Created on September 22, 2016, 11:30 AM
  * Purpose: Calculate miles per gallon
  */

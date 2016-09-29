@@ -13,9 +13,9 @@ CND_BUILDDIR=build
 CND_DLIB_EXT=dll
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_chap3_prob5_mnfpercentages
-OUTPUT_BASENAME=gaddis_chap3_prob5_mnfpercentages
-PACKAGE_TOP_DIR=gaddischap3prob5mnfpercentages/
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_8thed_chap3_prob5_mnfpercentages
+OUTPUT_BASENAME=gaddis_8thed_chap3_prob5_mnfpercentages
+PACKAGE_TOP_DIR=gaddis8thedchap3prob5mnfpercentages/
 
 # Functions
 function checkReturnCode
@@ -60,15 +60,15 @@ mkdir -p ${NBTMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory "${NBTMPDIR}/gaddischap3prob5mnfpercentages/bin"
+makeDirectory "${NBTMPDIR}/gaddis8thedchap3prob5mnfpercentages/bin"
 copyFileToTmpDir "${OUTPUT_PATH}.exe" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/gaddischap3prob5mnfpercentages.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/gaddis8thedchap3prob5mnfpercentages.tar
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/gaddischap3prob5mnfpercentages.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/gaddis8thedchap3prob5mnfpercentages.tar *
 checkReturnCode
 
 # Cleanup

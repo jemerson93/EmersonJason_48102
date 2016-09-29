@@ -1,6 +1,6 @@
 /* 
    File:   main
-   Author: Dr. Mark E. Lehr
+   Author: Jason Emerson
    Created on September 19th, 2016, 9:56 AM
    Purpose:  Monthly Payment
  */
