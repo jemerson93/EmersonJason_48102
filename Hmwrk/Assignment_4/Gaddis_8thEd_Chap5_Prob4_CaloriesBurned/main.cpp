@@ -24,14 +24,13 @@ int main(int argc, char** argv) {
     //Input values
     for (int i=10;i<=30;i+=5){
         calburn=i*calmin;
-        
+        cout<<"In "<<i<<" minutes, you burned "<<calburn<<" calories"<<endl;
+    } 
        
     //Process values -> Map inputs to Outputs
     
     //Display Output
-        cout<<"In "<<i<<" minutes, you burned "<<calburn<<" calories"<<endl;
-    }
-
+    
     //Exit Program
     return 0;
 }
