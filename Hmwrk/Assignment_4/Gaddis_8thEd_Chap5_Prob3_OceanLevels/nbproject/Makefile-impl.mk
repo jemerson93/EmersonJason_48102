@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Assignment 4 Menu
+PROJECTNAME=Gaddis_8thEd_Chap5_Prob3_OceanLevels
 
 # Active Configuration
 DEFAULTCONF=Debug
