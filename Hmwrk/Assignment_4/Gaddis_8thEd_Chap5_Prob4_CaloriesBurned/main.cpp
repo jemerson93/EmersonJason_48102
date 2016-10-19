@@ -1,7 +1,7 @@
 /* 
    File:   main
    Author: Jason Emerson
-   Created on September 13th, 2016, 10:00 AM
+   Created on October 13th, 2016, 11:30 AM
    Purpose: Number of calories burned after 5,10,15,20,25, and 30 minutes
  */
 
