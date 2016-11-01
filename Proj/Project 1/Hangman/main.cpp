@@ -15,8 +15,6 @@ using namespace std;  //Name-space used in the System Library
 //User Libraries
 
 //Global Constants
-const int maxG = 6;  // The max number of guesses allowed.
-const int lvlInc = 5; // The amount to increase the random number range by.
 
 //Function prototypes
 int showMenu();
@@ -112,7 +110,7 @@ int main(int argc, char** argv) {
     }
 	
 /************************************************
- ****************playGame************************
+ *********************playGame*******************
  *  Function: Game function - play the game     *
  *  Input: guess                                *
  *  Output: void                                *
@@ -125,7 +123,9 @@ int main(int argc, char** argv) {
         
         //Declare Variables
         int rnum, guess, max, guesses, score;
-		bool nxtlvl;
+        bool nxtlvl; //Move on to the next level if true, do not if false
+        int maxG = 6;  // The max number of guesses allowed.
+        int lvlInc = 5; // The amount to increase the random number range by.
 		
 		//Initialize variables
 		rnum=0;
@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
 	}
     
 /************************************************
- ****************printInstructions***************
+ *******************drawBoard********************
  *  Function: Draw the Hangman Board            *
  *  Input: None                                 *
  *  Output: void                                *
@@ -172,6 +172,8 @@ int main(int argc, char** argv) {
  *************************************************/
 	
 	void drawBoard(int guesses){
+            //Declare Variables
+            int maxG = 6;  // The max number of guesses allowed.
 		cout<<"guesses = "<<guesses<<endl;
 		cout<<"guesses remaining ="<<maxG-guesses<<endl;
                 
@@ -246,7 +248,7 @@ int main(int argc, char** argv) {
 	}
         
 /************************************************
- ****************printInstructions***************
+ ****************readHighScore*******************
  *  Function: Display the high score            *
  *  Input: file                                 *
  *  Output: high score                          *
@@ -256,7 +258,7 @@ int main(int argc, char** argv) {
         void readHighScore(){
             //Declaration of Variables
             ifstream in;
-            ofstream out;
+            //ofstream out;
             string line;
             string name;
             int score;
@@ -282,7 +284,7 @@ int main(int argc, char** argv) {
         }
         
 /************************************************
- ****************printInstructions***************
+ *******************highScore********************
  *  Function: Write to high score file          *
  *  Input: file                                 *
  *  Output: to file                                *
@@ -293,27 +295,37 @@ int main(int argc, char** argv) {
             ifstream in;
             ofstream out;
             string name;
-            int hScore;
+            //get high score from file
+            
+             
             string line;
             
             //Read High Score
             in.open("highscore.dat"); //Open High Score Files
-            
-            //Write to File
-            out.open("highscore.dat"); //Write new score to file
-            out<<name<<score;
-            
+            static int hScore =20;
+            in>>hScore;
                //If a new high score
             if(score>hScore){
             cout<<"Congratulations you have a new high score"<<endl;
             cout<<"Please enter your name."<<endl;
             cin>>name;
-            }else{
-                cout<<"Sorry no new high score"<<endl;
-            }
-            //Close the File
+            out.open("highscore.dat"); //Write new score to file
+            out<<name;            //Write to File
+            out<<endl;
+            out<<score;
+                      //Close the File
             out.close();
             out.clear();
             
             cout<<"Saved to file!"<<endl;
+            
+            }else{
+                cout<<"Sorry no new high score"<<endl;
+                cout<<"Old high score: "<<hScore<<endl;
+            }
+            
+
+
+ 
+  
         }
