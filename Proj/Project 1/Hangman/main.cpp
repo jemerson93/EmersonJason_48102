@@ -258,7 +258,6 @@ int main(int argc, char** argv) {
         void readHighScore(){
             //Declaration of Variables
             ifstream in;
-            //ofstream out;
             string line;
             string name;
             int score;
@@ -297,7 +296,6 @@ int main(int argc, char** argv) {
             string name;
             //get high score from file
             
-             
             string line;
             
             //Read High Score
@@ -322,10 +320,5 @@ int main(int argc, char** argv) {
             }else{
                 cout<<"Sorry no new high score"<<endl;
                 cout<<"Old high score: "<<hScore<<endl;
-            }
-            
-
-
- 
-  
+            } 
         }
