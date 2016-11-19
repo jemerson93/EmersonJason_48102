@@ -69,15 +69,14 @@ int main(int argc, char** argv) {
     int showMenu(){
         int choice = 0;
         do{
-        cout<<"Press 1 to begin the game"<<endl;
-        cout<<"Press 2 for instructions"<<endl;
-        cout<<"Press 3 to display the high score"<<endl;
-        cout<<"Press 4 to exit the game"<<endl;
-        cin>>choice;
-        if(choice<1||choice>4)
-            cout<<"Invalid choice. Please enter a correct value"<<endl;
-        }
-        while(choice<1||choice>4);
+            cout<<"Press 1 to begin the game"<<endl;
+            cout<<"Press 2 for instructions"<<endl;
+            cout<<"Press 3 to display the high score"<<endl;
+            cout<<"Press 4 to exit the game"<<endl;
+            cin>>choice;
+            if(choice<1||choice>4)
+                cout<<"Invalid choice. Please enter a correct value"<<endl;
+        }while(choice<1||choice>4);
         return choice;
     }
     

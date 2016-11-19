@@ -2,7 +2,7 @@
    File:   main
    Author: Jason Emerson
    Created on October 15th, 2016, 10:10 AM
-   Purpose: List a items wholesale cost and markup percentage.
+   Purpose: List an items wholesale cost and markup percentage.
  */
 
 //System Libraries
