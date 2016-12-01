@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug=hangman
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/hangman
+CND_ARTIFACT_NAME_Debug=hangman_v2
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/hangman_v2
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug=hangman.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/hangman.tar
+CND_PACKAGE_NAME_Debug=hangmanv2.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/hangmanv2.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=hangman
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/hangman
+CND_ARTIFACT_NAME_Release=hangman_v2
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/hangman_v2
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
-CND_PACKAGE_NAME_Release=hangman.tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/hangman.tar
+CND_PACKAGE_NAME_Release=hangmanv2.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/hangmanv2.tar
 #
 # include compiler specific variables
 #

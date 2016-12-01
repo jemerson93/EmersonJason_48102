@@ -19,17 +19,28 @@ using namespace std;
 //Program Execution Begins Here
 int main(int argc, char** argv) {
     //Declare all Variables Here
-    const int SIZE = 18;
-    int num[SIZE] = {5658845,4520125,7895122,8777541,8451277,1302850,8080152,
+    const int SIZE=18;
+        //Account Numbers Below
+    int accounts[SIZE]={5658845,4520125,7895122,8777541,8451277,1302850,8080152,
                      4562555,5552012,5050552,7825877,1250255,1005231,6545231,
                      3852085,7576651,7881200,4581002};
+    int accNum; //Account Number Being Input
+    bool found=false; //Exit Loop
     
     //Input or initialize values Here
+    cout<<"Please input the Account Number:"<<endl;
+    cin>>accNum;
     
-    //Process/Calculations Here
+    //Simple Linear Search
+    for(int i=1;i<18&&found==false;i++){
+        if(accNum==accounts[i])found=true;
+    }
     
     //Output Located Here
-    cout<<"Hello World"<<endl;
+    if(found==true)cout<<"Number is valid"<<endl;
+    else{
+        cout<<"Number is invalid"<<endl;
+    }
 
     //Exit
     return 0;
