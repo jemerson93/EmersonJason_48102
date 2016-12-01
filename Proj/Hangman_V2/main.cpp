@@ -22,9 +22,9 @@ using namespace std; //Name-space used in the System Library
 int showMenu();
 void printInstructions();
 void playGame();
-void drawBoard(int guesses);
-void readHighScore();
-void highScore(int score);
+void drawBoard(int);
+void readHighScore(int);
+void highScore(int);
 
 //Execution Begins Here!
 int main(int argc, char** argv){
@@ -36,6 +36,7 @@ int main(int argc, char** argv){
     
     //Declaration of Variables
     short mChoice=0;
+    int hScore;
     
     //Display the Main Menu and Get User's Choice
     do{
@@ -50,7 +51,7 @@ int main(int argc, char** argv){
                 break;
             case 3:
                 mChoice=3;
-                readHighScore();
+                readHighScore(hScore);
                 break;
             default:
                 mChoice=4;
@@ -72,7 +73,7 @@ int main(int argc, char** argv){
 
 int showMenu(){
     //Declaration of Variables
-    int choice=0; //Player's main menu choice
+    short choice=0; //Player's main menu choice
     
     //Input Choice and Return To Main
     do{
@@ -101,9 +102,6 @@ int showMenu(){
 void printInstructions(){
     //Declaration of Variables
     char goBack; //Return to Main Menu
-    string levels="• There are a total of 10 levels in this game.";
-    string lives="• In each level, you have a total amount of 6 lives."<<endl;
-    string endGame="• If you complete all 10 levels, you win the game. If you use up all of your guesses, you lose the game."<<endl;
     
     //Instructions
     cout<<"*******************************************************"<<endl;
@@ -115,15 +113,12 @@ void printInstructions(){
     cout<<"Below are some quick facts on the game. Good luck and remember to have fun!"<<endl;
     cout<<endl;
     cout<<setw(50)<<"Quick Facts:"<<endl;
-    cout<<setw(10)<<" "<<levels<<endl;
-    cout<<setw(10)<<" "<<lives<<endl;
-    cout<<setw(10)<<" "<<endGame<<endl;  
+    cout<<setw(10)<<"• There are a total of 10 levels in this game."<<endl;
+    cout<<setw(10)<<"• In each level, you have a total amount of 6 lives."<<endl;
+    cout<<setw(10)<<"• If you complete all 10 levels, you win the game. If you use up all of your guesses, you lose the game."<<endl;  
     cout<<endl;
     cout<<"Press any key and enter to return to the Main Menu."<<endl;
     cin>>goBack;
-    
-    //Exit Function
-    return void;
 }
 
 /************************************************
@@ -139,14 +134,14 @@ void playGame(){
     srand(static_cast<unsigned short>(time(0)));
     
     //Declaration of Variables
-    short rNum=0; //Random Number Generated
-    short guess=0; //Players guess
-    short max=0;   //Max Number for the Random Number Generator
-    short guesses; //Number of GUesses Used
-    short score=0;   //Players Score
-    bool nxtLvl=true;   //If true, enter next level. If false, do not
-    short maxG=6;  //Max number of guesses allowed
-    short lvlInc=5; //Amount to increase the random number range by
+    int rNum=0; //Random Number Generated
+    int guess=0; //Players guess
+    int max=10;   //Max Number for the Random Number Generator
+    int guesses; //Number of GUesses Used
+    int score=0;   //Players Score
+   bool nxtLvl=true;   //If true, enter next level. If false, do not
+    int maxG=6;  //Max number of guesses allowed
+    int lvlInc=5; //Amount to increase the random number range by
     
     //Beginning of Level
     while(nxtLvl){
@@ -184,7 +179,159 @@ void playGame(){
             highScore(score);
         }
     }  
+}
+
+/************************************************
+ *                 drawBoard                    *
+ ************************************************
+ *  Function: Draw the Hangman board            *
+ *  Input: None                                 *
+ *  Output: Void                                *
+ *************************************************/
+
+void drawBoard(int guesses){
+    //Declaration of Variables
+    int maxG=6; //The max number of guesses
     
-    //Exit Function
-    return void;
+    //Guesses and Guesses Remaining
+    cout<<"Guesses:"<<guesses<<endl;
+    cout<<"Guesses Remaining:"<<maxG-guesses<<endl;
+    
+    //Hangman Board Per Guess
+    switch(guesses){
+        case 0:
+            cout<<" +----+   "<<endl;
+            cout<<" |    !   "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" +-------+"<<endl;
+            break;
+        case 1:
+            cout<<" +----+   "<<endl;
+            cout<<" |    !   "<<endl;
+            cout<<" |    O    "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" +-------+"<<endl;
+            break;
+        case 2:
+            cout<<" +----+   "<<endl;
+            cout<<" |    !   "<<endl;
+            cout<<" |    O   "<<endl;
+            cout<<" |    |   "<<endl;
+            cout<<" |    ^   "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" +-------+"<<endl;
+            break;
+        case 3:
+            cout<<" +----+   "<<endl;
+            cout<<" |    !   "<<endl;
+            cout<<" |    O   "<<endl;
+            cout<<" |   o|   "<<endl;
+            cout<<" |    ^   "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" +-------+"<<endl;
+            break;
+        case 4:
+          cout<<" +----+   "<<endl;
+            cout<<" |    !   "<<endl;
+            cout<<" |    O   "<<endl;
+            cout<<" |   o|o  "<<endl;
+            cout<<" |    ^   "<<endl;
+            cout<<" |        "<<endl;
+            cout<<" +-------+"<<endl;
+            break;
+        case 5:
+            cout<<" +----+   "<<endl;
+            cout<<" |    !   "<<endl;
+            cout<<" |    O   "<<endl;
+            cout<<" |   o|o  "<<endl;
+            cout<<" |    ^   "<<endl;
+            cout<<" |   o    "<<endl;
+            cout<<" +-------+"<<endl;
+            break;
+        case 6:
+            cout<<" +----+   "<<endl;
+            cout<<" |    !   "<<endl;
+            cout<<" |    O   "<<endl;
+            cout<<" |   o|o  "<<endl;
+            cout<<" |    ^   "<<endl;
+            cout<<" |   o o  "<<endl;
+            cout<<" +-------+"<<endl;
+            break;
+    }
+}
+
+/************************************************
+ *                 readHighScore                *
+ ************************************************
+ *  Function: Display the high score            *
+ *  Input: highscore.dat                        *
+ *  Output: Void                                *
+ *************************************************/
+
+void readHighScore(int hScore){
+    //Declaration of Variables
+    ifstream in;
+    //string line;
+    string name;
+    short score;
+    
+    //Open High Score File
+    in.open("highscore.dat");
+    
+    //Display the High Scores
+    cout<<"*******************************************************"<<endl;
+    cout<<"                      High Scores:"<<endl;
+    cout<<"*******************************************************"<<endl;
+    cout<<endl;
+    in>>name;
+    in>>hScore;
+    cout<<name<<endl;
+    cout<<hScore<<endl;
+    
+    //Close High Score File
+    in.close();
+}
+
+/************************************************
+ *                 highScore                    *
+ ************************************************
+ *  Function: Save and write high score to file *
+ *  Input: highscore.dat                        *
+ *  Output: highscore.dat                       *
+ *************************************************/
+
+void highScore(int score){
+    //Declaration of Variables
+    ifstream in;
+    ofstream out;
+    string name;
+    short hScore;
+    
+    //Read High Score
+    in.open("highscore.dat");
+    in>>hScore;
+    
+    //If New High Score
+    if(score>hScore){
+        cout<<"Congratulations! You reached a new high score. Please enter your name below."<<endl;
+        cin>>name;
+        out.open("highscore.dat");
+        out<<name;
+        cout<<endl;
+        out<<score;
+    //Close High Score File
+        out.close();
+        out.clear();
+        cout<<"Saved to file!"<<endl;
+    
+    //If Not High Score
+    }else{
+        cout<<"Sorry, not a new high score."<<endl;
+        cout<<"Current High Score: "<<hScore<<endl;
+    }
 }
