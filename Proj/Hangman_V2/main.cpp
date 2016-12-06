@@ -134,19 +134,21 @@ void playGame(){
     srand(static_cast<unsigned short>(time(0)));
     
     //Declaration of Variables
+    //int const SIZE=10;
+    //int num[SIZE];
     int rNum=0; //Random Number Generated
     int guess=0; //Players guess
     int max=10;   //Max Number for the Random Number Generator
-    int guesses; //Number of GUesses Used
+    int guesses=0; //Number of GUesses Used
     int score=0;   //Players Score
    bool nxtLvl=true;   //If true, enter next level. If false, do not
-    int maxG=6;  //Max number of guesses allowed
+    int maxG=5;  //Max number of guesses allowed
     int lvlInc=5; //Amount to increase the random number range by
     
     //Beginning of Level
     while(nxtLvl){
         nxtLvl=false; //Set to false so loop doesn't activate if player loses
-        guesses=1;    //Start guesses over for new level
+        guesses=0;    //Start guesses over for new level
         rNum=rand()%max+1; //Generate a random number between 1 and the max available
         
     //Players Guess
@@ -191,7 +193,7 @@ void playGame(){
 
 void drawBoard(int guesses){
     //Declaration of Variables
-    int maxG=6; //The max number of guesses
+    int maxG=6; //The max number of guesses to dignify guesses remaining
     
     //Guesses and Guesses Remaining
     cout<<"Guesses:"<<guesses<<endl;
@@ -263,6 +265,7 @@ void drawBoard(int guesses){
             cout<<" +-------+"<<endl;
             break;
     }
+    cout<<endl;
 }
 
 /************************************************
@@ -277,24 +280,27 @@ void readHighScore(int hScore){
     //Declaration of Variables
     ifstream in;
     //string line;
-    string name;
+    string player;
     short score;
     
     //Open High Score File
+    //in.open("player_name.dat");
     in.open("highscore.dat");
+    in>>player>>hScore;
     
     //Display the High Scores
     cout<<"*******************************************************"<<endl;
     cout<<"                      High Scores:"<<endl;
     cout<<"*******************************************************"<<endl;
     cout<<endl;
-    in>>name;
-    in>>hScore;
-    cout<<name<<endl;
+    cout<<player<<endl;
     cout<<hScore<<endl;
     
     //Close High Score File
     in.close();
+    in.clear();
+    
+    cout<<endl;
 }
 
 /************************************************
@@ -312,26 +318,47 @@ void highScore(int score){
     string name;
     short hScore;
     
-    //Read High Score
+    //Read High Score File
     in.open("highscore.dat");
-    in>>hScore;
+    in>>name>>hScore;
     
     //If New High Score
     if(score>hScore){
         cout<<"Congratulations! You reached a new high score. Please enter your name below."<<endl;
         cin>>name;
         out.open("highscore.dat");
-        out<<name;
-        cout<<endl;
-        out<<score;
+        out<<name<<endl;
+        out<<score<<endl;
+   
     //Close High Score File
         out.close();
         out.clear();
         cout<<"Saved to file!"<<endl;
+    }
     
     //If Not High Score
-    }else{
+    if(score<hScore){
+        
+    //Read High Score File
+        in.open("highscore.dat");
+        in>>name>>hScore;
+     
+    //Display High Score
         cout<<"Sorry, not a new high score."<<endl;
-        cout<<"Current High Score: "<<hScore<<endl;
+        cout<<endl;
+        cout<<"Current High Score:"<<endl;
+        cout<<name<<endl;
+        cout<<hScore<<endl;
+        cout<<endl;
+        
+    //Close High Score File
+        out.close();
+        out.clear();
     }
 }
+
+
+/*in file
+ getline()
+ in.ignore
+ in.clear*/

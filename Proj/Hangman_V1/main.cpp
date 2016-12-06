@@ -317,7 +317,9 @@ int main(int argc, char** argv) {
             cout<<"Saved to file!"<<endl;
             
             }else{
+                in.open("highscore.dat");
+                in>>hScore;
+                
                 cout<<"Sorry no new high score"<<endl;
-                cout<<"Old high score: "<<hScore<<endl;
             } 
         }
