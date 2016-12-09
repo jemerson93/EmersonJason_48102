@@ -13,9 +13,16 @@
 #include <string>   //Strings
 #include <iomanip>  //Formatting
 #include <vector>   //Vector
+#include <cerrno>
+#include <cstring>
 using namespace std; //Name-space used in the System Library 
 
 //User Libraries
+struct Play
+{
+    string name;
+    int score;
+};
 
 //Global Constants
 const int COLS = 100;
@@ -30,6 +37,10 @@ void highScore(int);
 void setBoard(char [][COLS]);
 void drawBoard(char [][COLS],int &);
 void prntBoard(char [][COLS]);
+void fillAry(string,string [],int &);
+void fillAry(string,vector<int> &,int &);
+void prntAry(string [],vector<int> &,int n);
+void bubbleSort(string, int, int&);
 
 //Execution Begins Here!
 int main(int argc, char** argv){
@@ -144,7 +155,7 @@ void playGame(){
     int guess=0; //Players guess
     int max=10;   //Max Number for the Random Number Generator
     int guesses=0; //Number of GUesses Used
-    int score=0;   //Players Score
+    int points=0;   //Players Score
    bool nxtLvl=true;   //If true, enter next level. If false, do not
     int maxG=7;  //Max number of guesses allowed
     int lvlInc=5; //Amount to increase the random number range by
@@ -172,7 +183,7 @@ void playGame(){
                 cout<<"Correct! Increasing level."<<endl;
                 max+=lvlInc;
                 nxtLvl=true;
-                score+=1;
+                points+=1;
             }
             drawBoard(board,guesses);
             prntBoard(board);
@@ -183,7 +194,7 @@ void playGame(){
             //drawBoard(board,guesses);
             cout<<"Sorry, you lose! Better luck next time."<<endl;
             nxtLvl=false; //Set to false to break loop
-            highScore(score);
+            highScore(points);
         }
     }
 }
@@ -264,31 +275,106 @@ void prntBoard(char board[][COLS]){
 
 void readHighScore(int hScore){
     //Declaration of Variables
-    vector<int
+    const int SIZE=6; //Size = 100
+    string name[SIZE]; //Name array
+    vector<int> score(SIZE); //Score Vector
+    int n;
+    int m;
+    
+    string fnNames="names.dat";
+    string fnScores="scores.dat";
+    
+    fillAry(fnNames,name,n);
+    fillAry(fnScores,score,m);
+//    cout<<n<<endl;
+//    cout<<m<<endl;
+    
+    //Bubble Sort
+//    for(int i=0;i<100;i++){
+//        for(int j=0;j<i;j++){
+//            if(score[i]<score[j]){
+//               string tempName=name[i];
+//               int tempScore=score[i];
+//               name[i]=name[j];
+//               score[i]=score[j];
+//               name[j]=tempName;
+//               score[j]=tempScore;
+//            }
+//        }
+//    }
+    
+
+    prntAry( name, score, n );
+    bool swap = false;
+    int len = n - 1;
+    do{
+        swap = false;
+        for ( int i = 0; i < len; i++ ) {
+            if ( score[i] < score[i+1] ) {
+                string nametemp = name[i];
+                name[i] = name[i+1];
+                name[i+1] = nametemp;
+                int scoretemp = score[i];
+                score[i] = score[i+1];
+                score[i+1] = scoretemp;
+                swap = true;
+            }
+        }
+        len--;
+    }
+    while( swap );
+     //Output Located Here
+    prntAry( name, score, n );
+}
+
+void fillAry(string fn,string a[],int &n){
+    //Declare variables+ and open the file
     ifstream in;
-    //string line;
-    string player;
-    short score;
+    n=0;
     
-    //Open High Score File
-    //in.open("player_name.dat");
-    in.open("highscore.dat");
-    in>>player>>hScore;
+    //Open the stream
+    in.open(fn);
     
-    //Display the High Scores
-    cout<<"*******************************************************"<<endl;
-    cout<<"                      High Scores:"<<endl;
-    cout<<"*******************************************************"<<endl;
-    cout<<endl;
-    cout<<player<<endl;
-    cout<<hScore<<endl;
+    //Read in data
+    if(!in.is_open()){
+        cout<<"Error opening File "<< strerror(errno)<<endl;
+    }
+    string temp;
+    while( in>>temp ){
+        a[n++] = temp;
+    }
+//    n--;
     
-    //Close High Score File
+    //Close the file
     in.close();
-    in.clear();
+}
+
+void fillAry(string fn,vector<int> &a,int &n){
+    //Declare variables and open the file
+    ifstream in;
+    n=0;
     
+    //Open the stream
+    in.open(fn);
+    
+    //Read in data
+    while(in>>a[n++]);
+    n--;
+    
+    //Close the file
+    in.close();
+}
+
+void prntAry(string fn[],vector<int> &a,int n){
+    //Output Located Here
+    int count=0;
+    for(int i=0;i<n;i++){
+        cout<<fn[i]<<a[i]<<endl;
+        if((count++)%10==9)cout<<endl;
+    }
     cout<<endl;
 }
+
 
 /************************************************
  *                 highScore                    *
@@ -298,16 +384,56 @@ void readHighScore(int hScore){
  *  Output: highscore.dat                       *
  *************************************************/
 
-void highScore(int score){
+void highScore(int points){
     //Declaration of Variables
+    const int SIZE=100; //Size = 100
+    string name[SIZE]; //Name array
+    vector<int> score(SIZE); //Score Vector
+    int n;
+    int m;
+    
+    string fnNames="names.dat";
+    string fnScores="scores.dat";
+    
+    fillAry(fnNames,name,n);
+    fillAry(fnScores,score,m);
+    cout<<n<<endl;
+    cout<<m<<endl;
+    
+    //Bubble Sort
+    //Bubble Sort
+//    for(int i=0;i<100;i++){
+//        for(int j=0;j<i;j++){
+//            if(score[i]<score[j]){
+//               string tempName=name[i];
+//               int tempScore=score[i];
+//               name[i]=name[j];
+//               score[i]=score[j];
+//               name[j]=tempName;
+//               score[j]=tempScore;
+//            }
+//        }
+//    }
+    
+    
+    prntAry(name,score,n);
+}
+
+    
+    
+    
+    
+    
+    
+    /*//Declaration of Variables
     ifstream in;
     ofstream out;
     string name;
     short hScore;
     
-    //Read High Score File
-    in.open("highscore.dat");
-    in>>name>>hScore;
+    /Read High Score File
+    in.open("names.dat");
+    in.open("scores.dat");
     
     //If New High Score
     if(score>hScore){
@@ -343,4 +469,4 @@ void highScore(int score){
         out.clear();
     }
 }
-
+*/
