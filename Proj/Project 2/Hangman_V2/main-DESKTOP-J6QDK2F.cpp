@@ -33,7 +33,6 @@ void prntBoard(char [][COLS]);
 void fillAry(string,string [],int &);
 void fillAry(string,vector<int> &,int &);
 void prntAry(string [],vector<int> &,int n);
-bool linSearch(int [],int ,int);
 
 //Execution Begins Here!
 int main(int argc, char** argv){
@@ -92,10 +91,10 @@ int showMenu(){
         cout<<"Press 3 to display the high score"<<endl;
         cout<<"Press 4 to exit the game"<<endl;
         cin>>choice;
-        if(choice<1||choice>4){ //Error checking
+        if(choice<1 || choice>4){ //Error checking
             cout<<"Invalid entry. Please enter a number between 1 - 4"<<endl;
         }
-    }while(choice<1||choice>4);
+    }while(choice<1 || choice>4);
     
     //Exit Function and Return Choice
     return choice;
@@ -144,7 +143,6 @@ void playGame(){
     srand(static_cast<unsigned short>(time(0)));
     
     //Declaration of Variables
-    const int SIZE=20; //Size of Linear Search array
     int rNum=0; //Random Number Generated
     int guess=0; //Players guess
     int max=10;   //Max Number for the Random Number Generator
@@ -153,78 +151,46 @@ void playGame(){
    bool nxtLvl=true;   //If true, enter next level. If false, do not
     int maxG=7;  //Max number of guesses allowed
     int lvlInc=5; //Amount to increase the random number range by
-    char board[4][COLS]; //Character hangman board - initial board
-    int arr[SIZE]; //Linear Search Array
-    int chance; //Chance for extra life
-    bool exChance;
+    char board[4][COLS];
     
     //Beginning of Level
     while(nxtLvl){
         nxtLvl=false; //Set to false so loop doesn't activate if player loses
         guesses=0;    //Start guesses over for new level
         rNum=rand()%max+1; //Generate a random number between 1 and the max available
-        setBoard(board);  //Initiate the hangman board as a 4x3 of '-'
-        exChance=true; //Set extra chance to true
+        setBoard(board);
         
     //Players Guess
         cout<<"Your number range for this level is between 1 and "<<max<<". Please enter your guess now."<<endl;
         
     //Incorrect Guess
         do{
-            cin>>guess;  //Players input guess
-            while(guess<1){
-                cout<<"Please enter a guess."<<endl;
-                cin>>guess; //Players second input guess
+            cin>>guess;
+            while(guess<0){
+                cout<<"Please enter a number greater than 0."<<endl;
             }
-            guesses++;   //Increment guesses
-            
-            //High Guess
+            guesses++;
             if(guess>rNum){
                 cout<<"Guess is too high. Please try again."<<endl;
-            
-            //Low Guess
             }else if(guess<rNum){
                 cout<<"Guess is too low. Please try again."<<endl;
-            }
-            drawBoard(board,guesses); //Draw the hangman body part pending on the number of guesses user has
-            prntBoard(board);         //Display the Hangman board and update after each guess
-            
-            //Correct Guess
-            if(guess==rNum){
+            }else if(guess==rNum){
                 cout<<"Correct! Increasing level."<<endl;
-                max+=lvlInc; //Increase the max for the range by the intialization of lvlInc
-                nxtLvl=true; //Set next level to true to initiate the loop
-                points+=1;  //Add 1 point to the players score
+                max+=lvlInc;
+                nxtLvl=true;
+                points+=1;
             }
-            
-            //Players Extra Chance
-            if(maxG-guesses==0&&exChance==true){
-                exChance=false;
-                cout<<"You have lost. You have a chance to get 1 more life to try to continue the game. Please input a number.";
-                cout<<" If it is in the list of numbers, you will gain 1 life. If it is not, you will lose the game."<<endl;
-                cin>>chance;
-                
-                //Randomize Array
-                for(int i=0;i<SIZE;i++){
-                    arr[i]=rand()%50+1;
-                }
-                
-                if(linSearch(arr,SIZE,chance)){
-                    guesses--;
-                    cout<<"Congratulations! You have received another chance to guess the number."<<endl;
-                    cout<<"Please enter your guess now."<<endl;
-                }
-                else{
-                    cout<<"Sorry, you lose! Better luck next time."<<endl;
-                    nxtLvl=false; //Set to false to break the loop
-                    highScore(points); //Run highScore function and send points to function
-                }
-            }else if(exChance==false&&maxG-guesses==0){
-                cout<<"Sorry, you lose! Better luck next time."<<endl;
-                nxtLvl=false; //Set to false to break the loop
-                highScore(points); //Run highScore function and send points to function
-            }
+            drawBoard(board,guesses);
+            prntBoard(board);
         }while(guess!=rNum&&guesses<maxG);
+       
+    //Game Loss
+        if(maxG-guesses==0){
+            //drawBoard(board,guesses);
+            cout<<"Sorry, you lose! Better luck next time."<<endl;
+            nxtLvl=false; //Set to false to break loop
+            highScore(points);
+        }
     }
 }
 
@@ -235,7 +201,6 @@ void setBoard(char board[][COLS]){
         }
     }
 }
-
 /************************************************
  *                 drawBoard                    *
  ************************************************
@@ -290,7 +255,10 @@ void prntBoard(char board[][COLS]){
             }
         }
     }
+    
 }
+
+//void fillArray()
 
 /************************************************
  *                 readHighScore                *
@@ -302,51 +270,42 @@ void prntBoard(char board[][COLS]){
 
 void readHighScore(int hScore){
     //Declaration of Variables
-    const int SIZE=6; //Size =of array
+    const int SIZE=6; //Size = 100
     string names[SIZE]; //Name array
     vector<int> score(SIZE); //Score Vector
     int n;
     int m;
     
-    string fnNames="names.dat"; //Names
-    string fnScores="scores.dat"; //Scores
+    string fnNames="names.dat";
+    string fnScores="scores.dat";
     
-    fillAry(fnNames,names,n); //Fill the names array from the file
-    fillAry(fnScores,score,m); //Fill the scores array from the file
+    fillAry(fnNames,names,n);
+    fillAry(fnScores,score,m);
 
-    //Bubble Sort
-    bool swap=false;
-    int len=n-1;
+    bool swap = false;
+    int len = n - 1;
     do{
-        swap=false;
-        for(int i=0;i<len;i++){
-            if(score[i]<score[i+1]){
-                string nameTemp=names[i];
-                names[i]=names[i+1];
-                names[i+1]=nameTemp;
-                int scoreTemp=score[i];
-                score[i]=score[i+1];
-                score[i+1]=scoreTemp;
-                swap=true;
+        swap = false;
+        for ( int i = 0; i < len; i++ ) {
+            if ( score[i] < score[i+1] ) {
+                string nametemp = names[i];
+                names[i] = names[i+1];
+                names[i+1] = nametemp;
+                int scoretemp = score[i];
+                score[i] = score[i+1];
+                score[i+1] = scoretemp;
+                swap = true;
             }
         }
-        len--; //Post decremeent
+        len--;
     }
-    while(swap);
-    
-    //Display the High Scores
-    cout<<"*******************************************************"<<endl;
-    cout<<"                      High Scores:"<<endl;
-    cout<<"*******************************************************"<<endl;
-    cout<<endl;
-    
-    //Output the scores from both arrays sorted
+    while( swap );
+     //Output Located Here
     prntAry(names,score,n);
 }
 
-//Names
 void fillAry(string fn,string a[],int &n){
-    //Declaration of Variables
+    //Declare variables+ and open the file
     ifstream in;
     n=0;
     
@@ -355,40 +314,36 @@ void fillAry(string fn,string a[],int &n){
     
     //Read in data
     string temp;
-    while(in>>temp){
-        a[n++]=temp;
+    while( in>>temp ){
+        a[n++] = temp;
     }
+//    n--;
     
     //Close the file
-    in.close(); //Close the file
-    in.clear(); //Clear the file
+    in.close();
 }
 
-//Scores
 void fillAry(string fn,vector<int> &a,int &n){
-    //Declaration of Variables
+    //Declare variables and open the file
     ifstream in;
     n=0;
     
-    //Open the file
+    //Open the stream
     in.open(fn);
     
-    //Read in the data
+    //Read in data
     while(in>>a[n++]);
     n--;
     
     //Close the file
-    in.close(); //Close the file
-    in.clear(); //Clear the file
+    in.close();
 }
 
 void prntAry(string fn[],vector<int> &a,int n){
-    //Declaration of Variables
-    int count=0; //counter
-    
-    //Output and Display the Array
+    //Output Located Here
+    int count=0;
     for(int i=0;i<n;i++){
-        cout<<setw(25)<<fn[i]<<" "<<setw(4)<<a[i]<<endl;
+        cout<<fn[i]<<" "<<a[i]<<endl;
         if((count++)%10==9)cout<<endl;
     }
     cout<<endl;
@@ -405,40 +360,39 @@ void prntAry(string fn[],vector<int> &a,int n){
 
 void highScore(int points){
     //Declaration of Variables
-    ofstream out; //Output File
-    short hScore; //High Score
+    const int SIZE=100; //Size = 100
+    string names[SIZE]; //Name array
+    vector<int> score(SIZE); //Score Vector
     int n;
     int m;
-    string name; //Input name
-    const int SIZE=100;  //Size of the arrays
-    string names[SIZE]; //Name Array
-    vector<int> score(SIZE); //Score Vector
+    string name;
     string fnNames="names.dat";
     string fnScores="scores.dat";
+    ofstream out;
+    short hScore;
     
-    //Fill arrays
-    fillAry(fnNames,names,n); //Fill names array
-    fillAry(fnScores,score,m); //Fill scores array
+    fillAry(fnNames,names,n);
+    fillAry(fnScores,score,m);
     
     //Bubble Sort
-    bool swap=false;
-    int len=n-1;
+    bool swap = false;
+    int len = n - 1;
     do{
-        swap=false;
-        for(int i=0;i<len;i++){
-            if(score[i]<score[i+1]){
-                string nameTemp=names[i];
-                names[i]=names[i+1];
-                names[i+1]=nameTemp;
-                int scoreTemp=score[i];
-                score[i]=score[i+1];
-                score[i+1]=scoreTemp;
-                swap=true;
+        swap = false;
+        for ( int i = 0; i < len; i++ ) {
+            if ( score[i] < score[i+1] ) {
+                string nametemp = names[i];
+                names[i] = names[i+1];
+                names[i+1] = nametemp;
+                int scoretemp = score[i];
+                score[i] = score[i+1];
+                score[i+1] = scoretemp;
+                swap = true;
             }
         }
-        len--; //Post decremeent
+        len--;
     }
-    while(swap);
+    while( swap );
     
     //If New High Score
     if(points>score[4]){
@@ -446,51 +400,28 @@ void highScore(int points){
         cin>>name;
         names[4]=name;
         score[4]=points;
-        
-        //Out new name replacing lowest score name
         out.open("names.dat");
         for(int i=0;i<5;i++){
             out<<names[i]<<endl;
         }
-        out.close(); //Close the file
-        out.clear(); //Clear the file
-        
-        //Output new score replacing lowest score 
+        out.close();
+        out.clear();
         out.open("scores.dat");
         for(int j=0;j<5;j++){
-            out<<score[j]<<endl;
+            out<<score[j]<<endl;;
         }
-        out.close(); //Close the file
-        out.clear(); //Clear the file
+        out.close();
+        out.clear();
         
-        cout<<"Saved to file!"<<endl; //Error check to make sure it saves to file
-        cout<<endl;
+        cout<<"Saved to file!"<<endl;
     }
         
-    //If Not a new High Score
-    if(points<score[4]){
-        //Display High Score
+        //If Not High Score
+    if(points<hScore){
+        
+     
+    //Display High Score
         cout<<"Sorry, not a new high score."<<endl;
         cout<<endl;
     }
-}
-
-
-//000000011111111112222222222333333333344444444445555555555666666666677777777778
-//345678901234567890123456789012345678901234567890123456789012345678901234567890
-//*************************   linSearch   ****************************************
-//Purpose:  Use a linear search to give a chance at an extra life
-//Inputs:   range : Array of 20 random numbers between 1-100
-//          n     : Size of the array
-//          key   : Chance in the game function
-//Output:   Returns true or false depending if the number was found
-//******************************************************************************
-bool linSearch(int range[],int n,int key){
-    //Process Values
-    for(int i=0;i<n;i++){
-        if(key==range[i]){
-            return true;
-        }
-    }
-    return false;
 }
