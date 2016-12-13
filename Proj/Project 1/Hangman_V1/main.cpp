@@ -10,6 +10,7 @@
 #include <cstdlib>    //Random number
 #include <ctime>     //Set the random number seed
 #include <fstream>   //File I/O
+#include <iomanip>   //Formatting
 using namespace std;  //Name-space used in the System Library
 
 //User Libraries
@@ -269,10 +270,10 @@ int main(int argc, char** argv) {
             cout<<"           High Score:"<<endl;
             cout<<"**********************************"<<endl;
             getline(in,line);
-            cout<<line;
+            cout<<setw(12)<<line;
             cout<<endl;
             getline(in,line);
-            cout<<line;
+            cout<<setw(10)<<line;
             cout<<endl;
             cout<<endl;
             cout<<endl;
