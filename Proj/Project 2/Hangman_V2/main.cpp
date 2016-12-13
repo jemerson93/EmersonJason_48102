@@ -32,11 +32,12 @@ void drawBoard(char [][COLS],int &);
 void prntBoard(char [][COLS]);
 void fillAry(string,string [],int &);
 void fillAry(string,vector<int> &,int &);
-void prntAry(string [],vector<int> &,int n);
-bool linSearch(int [],int ,int);
+void prntAry(string [],vector<int> &,int);
+bool linSearch(int [],int,int);
 
 //Execution Begins Here!
 int main(int argc, char** argv){
+    
     //Welcome
     cout<<"****************************************************************"<<endl;
     cout<<"             Welcome to Numerical Hangman!"<<endl;
@@ -46,7 +47,6 @@ int main(int argc, char** argv){
     //Declaration of Variables
     short mChoice=0;
     int hScore;
-    //char hangman[3][3];
     
     //Display the Main Menu and Get User's Choice
     do{
@@ -73,14 +73,13 @@ int main(int argc, char** argv){
     return 0;
 }
 
-/************************************************
- *                   showMenu                   *
- ************************************************
- *  Function: Show the main menu                *
- *  Input: Choice                               *
- *  Output: Choice to main                      *
- *************************************************/
-
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   showMenu  ****************************************
+//Purpose:  Show menu functionality for switch(showMenu) in main
+//Inputs:   No input parameters - in game choice input between 1 - 4
+//Output:   Output choice back to main
+//******************************************************************************
 int showMenu(){
     //Declaration of Variables
     int choice=0; //Player's main menu choice
@@ -101,14 +100,13 @@ int showMenu(){
     return choice;
 }
 
-/************************************************
- *               printInstructions              *
- ************************************************
- *  Function: Show the instructions             *
- *  Input: None                                 *
- *  Output: Void                                *
- *************************************************/
-
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   printInstructions  *******************************
+//Purpose:  Print the instructions of the game
+//Inputs:   No input parameters - goBack input in game
+//Output:   Void Output (no return) - Displays the cout'd instructions
+//******************************************************************************
 void printInstructions(){
     //Declaration of Variables
     char goBack; //Return to Main Menu
@@ -123,22 +121,22 @@ void printInstructions(){
     cout<<"Below are some quick facts on the game. Good luck and remember to have fun!"<<endl;
     cout<<endl;
     cout<<setw(50)<<"Quick Facts:"<<endl;
-    cout<<setw(10)<<"• There are a total of 10 levels in this game."<<endl;
-    cout<<setw(10)<<"• In each level, you have a total amount of 6 lives."<<endl;
-    cout<<setw(10)<<"• If you complete all 10 levels, you win the game. If you use up all of your guesses, you lose the game."<<endl;  
+    cout<<setw(10)<<"• There is an unlimited amount of levels in this game."<<endl;
+    cout<<setw(10)<<"• In each level, you have a total amount of 7 lives."<<endl;
+    cout<<setw(10)<<"• When you complete each level, you gain 1 point."<<endl;
+    cout<<setw(10)<<"• Once you have used all 7 lives, you will have a chance to gain an additional life. If you fail, you lose."<<endl;
     cout<<endl;
     cout<<"Press any key and enter to return to the Main Menu."<<endl;
     cin>>goBack;
 }
 
-/************************************************
- *                 playGame                     *
- ************************************************
- *  Function: Game Function                     *
- *  Input: Guess                                *
- *  Output: Void                                *
- *************************************************/
-
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   playGame  ****************************************
+//Purpose:  Main game function for Hangman
+//Inputs:   No input parameters - guess, chance - in game inputs
+//Output:   Void Output (no return) - output points to highScore function
+//******************************************************************************
 void playGame(){
     //Set the Random Number Seed
     srand(static_cast<unsigned short>(time(0)));
@@ -156,7 +154,7 @@ void playGame(){
     char board[4][COLS]; //Character hangman board - initial board
     int arr[SIZE]; //Linear Search Array
     int chance; //Chance for extra life
-    bool exChance;
+    bool exChance; //Flag for extra chance in each level
     
     //Beginning of Level
     while(nxtLvl){
@@ -172,36 +170,36 @@ void playGame(){
     //Incorrect Guess
         do{
             cin>>guess;  //Players input guess
-            while(guess<1){
-                cout<<"Please enter a guess."<<endl;
-                cin>>guess; //Players second input guess
-            }
-            guesses++;   //Increment guesses
             
             //High Guess
             if(guess>rNum){
                 cout<<"Guess is too high. Please try again."<<endl;
+                guesses++;   //Increment guesses
+                drawBoard(board,guesses); //Draw the hangman body part pending on the number of guesses user has
+                prntBoard(board);         //Display the Hangman board and update after each guess
             
             //Low Guess
             }else if(guess<rNum){
                 cout<<"Guess is too low. Please try again."<<endl;
+                guesses++;   //Increment guesses
+                drawBoard(board,guesses); //Draw the hangman body part pending on the number of guesses user has
+                prntBoard(board);         //Display the Hangman board and update after each guess
             }
-            drawBoard(board,guesses); //Draw the hangman body part pending on the number of guesses user has
-            prntBoard(board);         //Display the Hangman board and update after each guess
-            
+
             //Correct Guess
             if(guess==rNum){
                 cout<<"Correct! Increasing level."<<endl;
-                max+=lvlInc; //Increase the max for the range by the intialization of lvlInc
+                max+=lvlInc; //Increase the max for the range by the initialization of lvlInc
                 nxtLvl=true; //Set next level to true to initiate the loop
                 points+=1;  //Add 1 point to the players score
             }
-            
+       
             //Players Extra Chance
             if(maxG-guesses==0&&exChance==true){
                 exChance=false;
-                cout<<"You have lost. You have a chance to get 1 more life to try to continue the game. Please input a number.";
-                cout<<" If it is in the list of numbers, you will gain 1 life. If it is not, you will lose the game."<<endl;
+                cout<<"You have lost. You have a chance to get 1 more life to try to continue the game."<<endl;
+                cout<<"Please input a number between 1 and 50. If it is in the list of numbers, you will have 1 more guess."<<endl;
+                cout<<"If it is not, you will lose the game."<<endl;
                 cin>>chance;
                 
                 //Randomize Array
@@ -215,7 +213,7 @@ void playGame(){
                     cout<<"Please enter your guess now."<<endl;
                 }
                 else{
-                    cout<<"Sorry, you lose! Better luck next time."<<endl;
+                    cout<<"Sorry,the number you have entered was not in the array of numbers. You lose! Better luck next time."<<endl;
                     nxtLvl=false; //Set to false to break the loop
                     highScore(points); //Run highScore function and send points to function
                 }
@@ -228,6 +226,13 @@ void playGame(){
     }
 }
 
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   setBoard  ****************************************
+//Purpose:  Set the initial char board array of ----
+//Inputs:   board : char array of 4x3 ' - '
+//Output:   Void Output (no return) - Displays initial hangman board
+//******************************************************************************
 void setBoard(char board[][COLS]){
     for(int i=0;i<4;i++){
         for(int j=0;j<3;j++){
@@ -236,14 +241,14 @@ void setBoard(char board[][COLS]){
     }
 }
 
-/************************************************
- *                 drawBoard                    *
- ************************************************
- *  Function: Draw the Hangman board            *
- *  Input: None                                 *
- *  Output: Void                                *
- *************************************************/
-
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   drawBoard  ***************************************
+//Purpose:  Draw over the initial board pending how many guesses player has
+//Inputs:   board   : char array with 4 rows and 3 columns
+//          guesses : number of guesses coming from playGame referenced
+//Output:   Void Output - no return - draw the body parts on the board array
+//******************************************************************************
 void drawBoard(char board[][COLS],int &guesses){
     //Declaration of Variables
     int maxG=7; //The max number of guesses to dignify guesses remaining
@@ -251,8 +256,6 @@ void drawBoard(char board[][COLS],int &guesses){
     //Guesses and Guesses Remaining
     cout<<"Guesses:"<<guesses<<endl;
     cout<<"Guesses Remaining:"<<maxG-guesses<<endl;
-    
-    //guesses++; //Increment guesses when wrong
     
     //Hangman Board Per Guess
     switch(guesses){
@@ -281,9 +284,16 @@ void drawBoard(char board[][COLS],int &guesses){
     cout<<endl;
 }
 
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   prntBoard      ***********************************
+//Purpose:  Display both arrays as a Hangman Board
+//Inputs:   board : Array set to 4 rows and 3 cols
+//Output:   Print the two dimensional array in the function that calls it
+//******************************************************************************
 void prntBoard(char board[][COLS]){
-    for(int i=0;i<4;i++){
-        for(int j=0;j<3;j++){
+    for(int i=0;i<4;i++){ //Rows
+        for(int j=0;j<3;j++){ //Columns
             cout<<board[i][j];
             if(j==2){
                 cout<<endl;
@@ -292,21 +302,20 @@ void prntBoard(char board[][COLS]){
     }
 }
 
-/************************************************
- *                 readHighScore                *
- ************************************************
- *  Function: Display the high score            *
- *  Input: highscore.dat                        *
- *  Output: Void                                *
- *************************************************/
-
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   readHighScore    *********************************
+//Purpose:  Display the current high scores in the 2 files
+//Inputs:   hScore : The current list of the top 5 high scores for my game
+//Output:   Void Output (no return) - Display the high scores from high to low
+//******************************************************************************
 void readHighScore(int hScore){
     //Declaration of Variables
     const int SIZE=6; //Size =of array
     string names[SIZE]; //Name array
     vector<int> score(SIZE); //Score Vector
-    int n;
-    int m;
+    int n; //Size names
+    int m; //Size scores
     
     string fnNames="names.dat"; //Names
     string fnScores="scores.dat"; //Scores
@@ -330,9 +339,8 @@ void readHighScore(int hScore){
                 swap=true;
             }
         }
-        len--; //Post decremeent
-    }
-    while(swap);
+        len--; //Post decrement
+    }while(swap);
     
     //Display the High Scores
     cout<<"*******************************************************"<<endl;
@@ -344,17 +352,25 @@ void readHighScore(int hScore){
     prntAry(names,score,n);
 }
 
-//Names
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   fillAry      *************************************
+//Purpose:  Fill an array of names from the names.dat file
+//Inputs:   fn : string of 5 names saved to the names.dat file
+//          a  : Array of the names from the names.dat file
+//          n  : Size of the array
+//Output:   Fill the names array
+//******************************************************************************
 void fillAry(string fn,string a[],int &n){
     //Declaration of Variables
     ifstream in;
+    string temp;
     n=0;
     
     //Open the stream
     in.open(fn);
     
     //Read in data
-    string temp;
     while(in>>temp){
         a[n++]=temp;
     }
@@ -364,7 +380,15 @@ void fillAry(string fn,string a[],int &n){
     in.clear(); //Clear the file
 }
 
-//Scores
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   fillAry      *************************************
+//Purpose:  Fill an array of scores from the score.dat file
+//Inputs:   fn : string of 5 scores saved to the score.dat file
+//          a  : Vector array of the scores from the score.dat file
+//          n  : Size of the array
+//Output:   Fill the scores array
+//******************************************************************************
 void fillAry(string fn,vector<int> &a,int &n){
     //Declaration of Variables
     ifstream in;
@@ -382,6 +406,15 @@ void fillAry(string fn,vector<int> &a,int &n){
     in.clear(); //Clear the file
 }
 
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   prntAry  *****************************************
+//Purpose:  Print the high scores as 2 parallel arrays
+//Inputs:   fn : String array of names saved to the names file
+//          a  : Vector array of integer numbers saved to the score file
+//          n  : Size of the arrays
+//Output:   Void Output (no return) - Displays the high scores
+//******************************************************************************
 void prntAry(string fn[],vector<int> &a,int n){
     //Declaration of Variables
     int count=0; //counter
@@ -394,15 +427,13 @@ void prntAry(string fn[],vector<int> &a,int n){
     cout<<endl;
 }
 
-
-/************************************************
- *                 highScore                    *
- ************************************************
- *  Function: Save and write high score to file *
- *  Input: highscore.dat                        *
- *  Output: highscore.dat                       *
- *************************************************/
-
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   highScore   **************************************
+//Purpose:  Determine if the high score is new or note. If new, write to file
+//Inputs:   points : points from game 
+//Output:   void output (no return))
+//******************************************************************************
 void highScore(int points){
     //Declaration of Variables
     ofstream out; //Output File
@@ -436,9 +467,8 @@ void highScore(int points){
                 swap=true;
             }
         }
-        len--; //Post decremeent
-    }
-    while(swap);
+        len--; //Post decrement
+    }while(swap);
     
     //If New High Score
     if(points>score[4]){
@@ -475,10 +505,9 @@ void highScore(int points){
     }
 }
 
-
 //000000011111111112222222222333333333344444444445555555555666666666677777777778
 //345678901234567890123456789012345678901234567890123456789012345678901234567890
-//*************************   linSearch   ****************************************
+//*************************   linSearch   **************************************
 //Purpose:  Use a linear search to give a chance at an extra life
 //Inputs:   range : Array of 20 random numbers between 1-100
 //          n     : Size of the array
@@ -486,11 +515,11 @@ void highScore(int points){
 //Output:   Returns true or false depending if the number was found
 //******************************************************************************
 bool linSearch(int range[],int n,int key){
-    //Process Values
+    //Linear Search
     for(int i=0;i<n;i++){
         if(key==range[i]){
-            return true;
+            return true; //If number is found return true
         }
     }
-    return false;
+    return false; //If number is not found return false
 }
