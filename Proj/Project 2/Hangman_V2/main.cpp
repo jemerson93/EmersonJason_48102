@@ -34,6 +34,7 @@ void fillAry(string,string [],int &);
 void fillAry(string,vector<int> &,int &);
 void prntAry(string [],vector<int> &,int);
 bool linSearch(int [],int,int);
+void bubbSort(string& [],vector<int> &,int);
 
 //Execution Begins Here!
 int main(int argc, char** argv){
@@ -324,23 +325,7 @@ void readHighScore(int hScore){
     fillAry(fnScores,score,m); //Fill the scores array from the file
 
     //Bubble Sort
-    bool swap=false;
-    int len=n-1;
-    do{
-        swap=false;
-        for(int i=0;i<len;i++){
-            if(score[i]<score[i+1]){
-                string nameTemp=names[i];
-                names[i]=names[i+1];
-                names[i+1]=nameTemp;
-                int scoreTemp=score[i];
-                score[i]=score[i+1];
-                score[i+1]=scoreTemp;
-                swap=true;
-            }
-        }
-        len--; //Post decrement
-    }while(swap);
+    bubbSort(names,score,n);
     
     //Display the High Scores
     cout<<"*******************************************************"<<endl;
@@ -452,23 +437,7 @@ void highScore(int points){
     fillAry(fnScores,score,m); //Fill scores array
     
     //Bubble Sort
-    bool swap=false;
-    int len=n-1;
-    do{
-        swap=false;
-        for(int i=0;i<len;i++){
-            if(score[i]<score[i+1]){
-                string nameTemp=names[i];
-                names[i]=names[i+1];
-                names[i+1]=nameTemp;
-                int scoreTemp=score[i];
-                score[i]=score[i+1];
-                score[i+1]=scoreTemp;
-                swap=true;
-            }
-        }
-        len--; //Post decrement
-    }while(swap);
+    bubbSort(names,score,n);
     
     //If New High Score
     if(points>score[4]){
@@ -522,4 +491,25 @@ bool linSearch(int range[],int n,int key){
         }
     }
     return false; //If number is not found return false
+}
+
+void bubbSort(string &names[],vector<int> &score,int n){
+    //Bubble Sort
+    bool swap=false;
+    int len=n-1;
+    do{
+        swap=false;
+        for(int i=0;i<len;i++){
+            if(score[i]<score[i+1]){
+                string nameTemp=names[i];
+                names[i]=names[i+1];
+                names[i+1]=nameTemp;
+                int scoreTemp=score[i];
+                score[i]=score[i+1];
+                score[i+1]=scoreTemp;
+                swap=true;
+            }
+        }
+        len--; //Post decrement
+    }while(swap);
 }
