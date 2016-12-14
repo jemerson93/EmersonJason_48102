@@ -407,7 +407,7 @@ void prntAry(string fn[],vector<float> &a,int n){
     
     //Output and Display the Array
     for(int i=0;i<n;i++){
-        cout<<setw(25)<<fn[i]<<" "<<setw(20)<<a[i]<<endl;
+        cout<<setw(25)<<fn[i]<<" "<<setw(8)<<a[i]<<endl;
         if((count++)%10==9)cout<<endl;
     }
     cout<<endl;
