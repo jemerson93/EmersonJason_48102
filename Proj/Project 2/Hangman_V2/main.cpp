@@ -13,6 +13,7 @@
 #include <string>   //Strings
 #include <iomanip>  //Formatting
 #include <vector>   //Vector
+#include <cmath>    //Math
 using namespace std; //Name-space used in the System Library 
 
 //User Libraries
@@ -25,16 +26,16 @@ int showMenu();
 void printInstructions();
 void playGame();
 void drawBoard(int);
-void readHighScore(int);
-void highScore(int);
+void readHighScore(float);
+void highScore(float);
 void setBoard(char [][COLS]);
 void drawBoard(char [][COLS],int &);
 void prntBoard(char [][COLS]);
-void fillAry(string,string [],int &);
-void fillAry(string,vector<int> &,int &);
-void prntAry(string [],vector<int> &,int);
+void fillAry(string,string [],int&);
+void fillAry(string,vector<float> &,int&);
+void prntAry(string [],vector<float> &,int);
 bool linSearch(int [],int,int);
-void bubbSort(string& [],vector<int> &,int);
+void bubbSort(string [],vector<float> &,int=5);
 
 //Execution Begins Here!
 int main(int argc, char** argv){
@@ -148,8 +149,8 @@ void playGame(){
     int guess=0; //Players guess
     int max=10;   //Max Number for the Random Number Generator
     int guesses=0; //Number of GUesses Used
-    int points=0;   //Players Score
-   bool nxtLvl=true;   //If true, enter next level. If false, do not
+    float points=0.0;   //Players Score
+    bool nxtLvl=true;   //If true, enter next level. If false, do not
     int maxG=7;  //Max number of guesses allowed
     int lvlInc=5; //Amount to increase the random number range by
     char board[4][COLS]; //Character hangman board - initial board
@@ -192,7 +193,7 @@ void playGame(){
                 cout<<"Correct! Increasing level."<<endl;
                 max+=lvlInc; //Increase the max for the range by the initialization of lvlInc
                 nxtLvl=true; //Set next level to true to initiate the loop
-                points+=1;  //Add 1 point to the players score
+                points+=pow(2,2);  //Square the current points squared and add to the current points
             }
        
             //Players Extra Chance
@@ -310,11 +311,11 @@ void prntBoard(char board[][COLS]){
 //Inputs:   hScore : The current list of the top 5 high scores for my game
 //Output:   Void Output (no return) - Display the high scores from high to low
 //******************************************************************************
-void readHighScore(int hScore){
+void readHighScore(float hScore){
     //Declaration of Variables
     const int SIZE=6; //Size =of array
     string names[SIZE]; //Name array
-    vector<int> score(SIZE); //Score Vector
+    vector<float> score(SIZE); //Score Vector
     int n; //Size names
     int m; //Size scores
     
@@ -374,7 +375,7 @@ void fillAry(string fn,string a[],int &n){
 //          n  : Size of the array
 //Output:   Fill the scores array
 //******************************************************************************
-void fillAry(string fn,vector<int> &a,int &n){
+void fillAry(string fn,vector<float> &a,int &n){
     //Declaration of Variables
     ifstream in;
     n=0;
@@ -400,13 +401,13 @@ void fillAry(string fn,vector<int> &a,int &n){
 //          n  : Size of the arrays
 //Output:   Void Output (no return) - Displays the high scores
 //******************************************************************************
-void prntAry(string fn[],vector<int> &a,int n){
+void prntAry(string fn[],vector<float> &a,int n){
     //Declaration of Variables
     int count=0; //counter
     
     //Output and Display the Array
     for(int i=0;i<n;i++){
-        cout<<setw(25)<<fn[i]<<" "<<setw(4)<<a[i]<<endl;
+        cout<<setw(25)<<fn[i]<<" "<<setw(20)<<a[i]<<endl;
         if((count++)%10==9)cout<<endl;
     }
     cout<<endl;
@@ -419,7 +420,7 @@ void prntAry(string fn[],vector<int> &a,int n){
 //Inputs:   points : points from game 
 //Output:   void output (no return))
 //******************************************************************************
-void highScore(int points){
+void highScore(float points){
     //Declaration of Variables
     ofstream out; //Output File
     short hScore; //High Score
@@ -428,7 +429,7 @@ void highScore(int points){
     string name; //Input name
     const int SIZE=100;  //Size of the arrays
     string names[SIZE]; //Name Array
-    vector<int> score(SIZE); //Score Vector
+    vector<float> score(SIZE); //Score Vector
     string fnNames="names.dat";
     string fnScores="scores.dat";
     
@@ -493,7 +494,16 @@ bool linSearch(int range[],int n,int key){
     return false; //If number is not found return false
 }
 
-void bubbSort(string &names[],vector<int> &score,int n){
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   bubbSort  ***************************************
+//Purpose:  Use a bubble sort to sort arrays
+//Inputs:   names   : string array with names
+//          score   : vector with scores 
+//          n       : Size = 5
+//Output:   Void Output - no return - Sort where called
+//******************************************************************************
+void bubbSort(string names[],vector<float> &score,int n){
     //Bubble Sort
     bool swap=false;
     int len=n-1;
